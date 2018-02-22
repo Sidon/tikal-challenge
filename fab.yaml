@@ -1,0 +1,56 @@
+python_version: 3.6
+project: processus
+cvs_repo: https://github.com/Sidon/tikal-challenge.git
+conda_env: tikal python=3.6
+database: tikal
+_local_repo: os.path.abspath(os.path.dirname(__file__))
+dir_apps: /apps/
+migrate_file: models.py
+ssh_conf: /home/sidon/.ssh/config
+
+
+servers:
+  local:
+    home: /home/sidon
+    env_activate: 'source /home/sidon/anaconda3/envs/tikal/bin/activate tikal'
+    repo_project: criado dinamicamente com eval(_local_root)
+    dir_project: criado dinamicamente a partir de repo_project
+    root_staging: /mnt/admins/webapps
+    db_name: tikal-challenge
+    backup_dir: Criado dinamicamente via __local_repo/backup
+
+
+  staging:
+    home: /home/admins
+    root: /home/admins/webapps
+    repo_project: /home/admins/webapps/tikal
+    dir_project: /home/admins/webapps/work-at-list/work-at-list/
+    dir_apps: /home/admins/webapps/work-at-list/work-at-list/apps
+    env_activate: 'source /opt/anaconda/envs/tikal/bin/activate tikal'
+    backup_dir: /home/admins/webapps/backup
+    db_name: tikal
+
+
+  # gcloud
+  producao:
+    home: /home/sidon
+    root: /home/sidon/webapps
+    repo_project: /home/sidon/webapps/tikal
+    dir_project: /home/sidon/webapps/tikal/tikal
+    dir_apps: /home/sidon/webapps/tikal/apps/
+    env_activate: 'source /home/sidon/opt/miniconda3/envs/tikal/bin/activate tikal'
+    backup_dir: /home/sidon/webapps/backup
+    db_name: tikal
+
+
+rsync_exclude: !!python/tuple ['.DS_Store', '.hg', '.git', '*.pyc', '*.example', '*.db', 'media/admin', 'fab.yaml',
+                               'media/attachments', 'local_settings.py', 'fabfile*.py', 'bootstrap.py', '.idea',
+                               '.gitignore']
+
+
+
+
+
+
+
+
