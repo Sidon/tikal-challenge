@@ -1,3 +1,2 @@
-gunicorn
 -r production.txt
-
+gunicorn
