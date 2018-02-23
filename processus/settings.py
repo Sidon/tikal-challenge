@@ -14,6 +14,8 @@ config = Config( os.path.join(CONFIG_DIR, os.environ['FCONFIG'] ))
 SECRET_KEY = config.get_config('secretk')
 DEBUG = config.get_config('debug')=='on'
 ALLOWED_HOSTS = config.get_config('ahosts').split(',')
+ALLOWED_HOSTS += ',tikal-challenge.herokuapp.com'
+
 DATABASES = config.get_config('db')
 
 print (DATABASES)
