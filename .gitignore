@@ -1,0 +1,15 @@
+*.py[co]
+.DS_Store
+.idea
+*.swp*
+*~
+*.tmproj
+*.log
+.env
+tmp
+.FCONFIG
+.MASTERKEY
+.config*
+..travis.yml.kate-swp
+.config-local.json
+.config-heroku.yaml
