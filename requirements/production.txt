@@ -6,6 +6,7 @@ Django==1.11.2
 django-filter==1.0.4
 django-toolbelt==0.0.1
 djangorestframework==3.6.3
+django-material==1.2.2
 drf-tracking==1.2.0
 drfdocs==0.0.11
 httpie==0.9.9
