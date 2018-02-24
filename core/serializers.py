@@ -1,21 +1,21 @@
-from rest_framework.reverse import reverse
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 from .models import Processo
 from rest_framework_tracking.models import APIRequestLog
 
 
 class ProcessoSerializer(serializers.ModelSerializer):
-    instance = serializers.SerializerMethodField()
-    # links = serializers.SerializerMethodField()
+
+    links = serializers.SerializerMethodField()
+    data_face = {}
 
     class Meta:
         model = Processo
-        fields = ('numero_processo', 'dados_processo', 'instance')
-
+        fields = ('numero_processo', 'dados_processo','links')
 
     def get_links(self, obj):
         request = self.context['request']
-        links = {'self': reverse('person-detail', kwargs={'pk': obj.pk}, request=request)}
+        links = {'self': reverse('processo-detail', kwargs={'pk': obj.pk}, request=request)}
 
         if bool(request.POST):
             pass

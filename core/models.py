@@ -8,3 +8,5 @@ class Processo(models.Model):
     def __str__(self):
         return self.numero_processo
 
+    class Meta:
+        verbose_name = 'Processo'

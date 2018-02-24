@@ -14,7 +14,9 @@ from paramiko import SSHConfig
 from os.path import expanduser
 from fabric.utils import abort
 import pprint
+from fabric.api import local
 pp = pprint.PrettyPrinter(indent=2)
+
 
 
 env.use_ssh_config = True
@@ -347,3 +349,13 @@ def __chkserver(_server):
         _server = 'local'
 
     return _server
+
+def deploy_heroku():
+    local('git add -u')
+    print("enter your git commit comment: ")
+    comment = input()
+    local('git commit -m "%s"' % comment)
+    local('git push -u origin master')
+    local('heroku maintenance:on')
+    local('git push heroku master')
+    local('heroku maintenance:off')

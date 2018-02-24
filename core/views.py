@@ -1,14 +1,9 @@
 from django.core.exceptions import ValidationError
-
-# DRF
-from rest_framework import viewsets
-from rest_framework import authentication, permissions, viewsets, filters, pagination
+from rest_framework import authentication, permissions, viewsets, filters
 from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework_tracking.models import APIRequestLog
-
 from .models import Processo
 from .serializers import ProcessoSerializer, TrackSerializer
-from .forms import ProcessoFilter
 
 class DefaultsMixin(object):
     """Default settings for view authentication, permissions, filtering
@@ -22,9 +17,12 @@ class DefaultsMixin(object):
          permissions.IsAuthenticated,
     )
 
-    # pagination_class = pagination.PageNumberPagination
-    # paginate_by = 10
+    # authentication_classes = ()
+    # permission_classes = ()
 
+    paginate_by = 25
+    paginate_by_param = 'page_size'
+    max_paginate_by = 100
     filter_backends = (
         filters.DjangoFilterBackend,
         filters.SearchFilter,
@@ -32,25 +30,39 @@ class DefaultsMixin(object):
     )
 
 
-class ProcessoViewSet(DefaultsMixin, viewsets.ModelViewSet):
-    '''
-     
-    API endpoint that allows processos to view
-    
-    retrieve:    
-    Return a processo instance.
-        
-    list:    
-    Return a list of all processo. For view a instance,
-    click in *instance* link
-    
-    '''
-    queryset = Processo.objects.all()
+class ProcessoViewSet(DefaultsMixin, LoggingMixin, viewsets.ModelViewSet):
     serializer_class = ProcessoSerializer
-    search_fields = ('numero_processo', )
-    # lookup_field = 'name'
-    http_method_names = ['get', 'head']
-    filter_class = ProcessoFilter
+    search_fields = ('numero_processo' )
+    queryset = Processo.objects.all()
+
+
+    def get_queryset(self):
+        queryset = Processo.objects.all()
+        num_processo = self.request.query_params.get('numero_processo', None)
+        limit = self.request.query_params.get('limit', None)
+        last = self.request.query_params.get('last', None)
+        empty = self.request.query_params.get('empty', None)
+
+        if empty is not None:
+            try:
+                Processo.objects.all().delete()
+                raise ValidationError('Empty Ok')
+            except Exception as e:
+                print(e)
+
+        if num_processo is not None:
+            return queryset.filter(numero_processo=num_processo)
+        elif limit is not None:
+            return queryset[:int(limit)]
+        elif last is not None:
+            return queryset.order_by('-numero_processo')[:int(last)]
+
+        return queryset
+
+    def perform_create(self, serializer):
+        if bool(self.request.POST):
+            if bool(self.request.POST):
+                serializer.save ()
 
 
 class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet):
@@ -62,7 +74,11 @@ class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet
     def get_queryset(self):
         queryset = APIRequestLog.objects.all()
         limit = self.request.query_params.get('limit', None)
+        last = self.request.query_params.get('last', None)
 
         if limit is not None:
             queryset = queryset[:int(limit)]
+        elif last is not None:
+            return queryset.order_by('-numero_processo')[:int(last)]
         return queryset
+
