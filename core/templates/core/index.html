@@ -1,7 +1,28 @@
 {% extends 'core/base.html' %}
-{%  block conent %}
+{%  block content %}
 
+    {% block header %}
+        <h1>Tikal Challenge</h1>
+    {% endblock %}
+
+
+    <div class="get-user">
+       <row>
+           <p>Digite seu nome de usuário:</p>
+       </row>
+       <row>
+           <input type="text">
+           <button>Confirme</button>
+       </row>
+    </div>
+
+
+    <div id="lista">
+
+    </div>
     {% for d in data %}
-        <p>{{ d.numero_processo }}</p>
+        <p>Numero: {{ d.numero_processo }}</p>
+        <p>Dados: {{ d.dados_processo }}</p>
     {% endfor %}
+
 {% endblock %}

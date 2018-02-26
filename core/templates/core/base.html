@@ -16,42 +16,34 @@
 
 <body>
 
-    <div class="container">
-        <nav class="nav">
+    <div class="wrapper">
+
+      <div class="box header">
+          {% block header %} {% endblock %}
+      </div>
+
+        <nav class="sidebar">
           <!-- Navigation -->
           <ul>
-            <li class="active">
-                <a class="lex" href="index.html ">Dashboard</a>
-                </a>
-            </li>
-
-            <li>
-                <a class="nav-link" href="./cadastro.html">Cadastro</a>
-            </li>
-                
-            <li>
-                <a class="nav-link" href="./listagem">Listagem</a>
-            </li>
-
-            <li>
-                <a class="nav-link" href="./admin/">Admin</a>
-            </li>
-
-            <li>
-                <a class="nav-link" href="./api/">API</a>
-            </li>
-
-
-
+            <li class="active"><a class="lex" href="index.html ">Listagem</a></li>
+            <li><a href="./cadastro.html">Cadastro</a></li>
+            <li><a href="./admin/">Admin</a></li>
+            <li><a href="./api/">API</a></li>
           </ul>
         </nav>
         
-        {% block header %} {% endblock %}
-      
-        <main>
+
+        <div class="box content">
             {% block content %}
             {% endblock %}
-        </main>
+        </div>
     </div>
+
+    <div class="box footer">
+        <p>
+            By Sidon 2018
+        </p>
+    </div>
+
 </body>
 </html>

@@ -86,4 +86,5 @@ class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet
 
 def index(request):
     data = Processo.objects.all()
+    print (data)
     return render(request, 'core/index.html', {'data': data} )
