@@ -18,7 +18,6 @@ ALLOWED_HOSTS.append('tikal-challenge.herokuapp.com')
 
 DATABASES = config.get_config('db')
 
-print (DATABASES)
 
 
 # Application definition
@@ -36,7 +35,15 @@ INSTALLED_APPS = [
     'core',
     'rest_framework_docs',
     'django_filters',
+    'controlcenter',
 ]
+
+
+CONTROLCENTER_DASHBOARDS = (
+    ('tikdash', 'dashboards.dashboard.TikDash'),
+)
+
+
 
 MIDDLEWARE_CLASSES = [
     # Simplified static file serving.
@@ -54,12 +61,12 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'processus.urls'
 
+
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'core/templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        'DIRS': []
-        ,
+        'DIRS': [TEMPLATE_PATH],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,8 +79,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'processus.wsgi.application'
 
+print(TEMPLATE_PATH)
+
+WSGI_APPLICATION = 'processus.wsgi.application'
 
 
 if 'TRAVIS' in os.environ:
@@ -135,6 +144,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
+STATIC_URL = '/static/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

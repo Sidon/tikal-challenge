@@ -48,8 +48,7 @@ class Command(BaseCommand):
     help = 'Create initial data'
 
     def handle(self, *args, **options):
-
         Processo.objects.all().delete()
-
         for processo in data:
-            Processo.objects.create(numero_processo=processo['num'], dados_processo=processo['dados'])
+            Processo.objects.create(user_id='1', numero_processo=processo['num'], dados_processo=processo['dados'])
+            

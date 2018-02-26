@@ -1,9 +1,11 @@
+from django.shortcuts import render
 from django.core.exceptions import ValidationError
 from rest_framework import authentication, permissions, viewsets, filters
 from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework_tracking.models import APIRequestLog
 from .models import Processo
 from .serializers import ProcessoSerializer, TrackSerializer
+
 
 class DefaultsMixin(object):
     """Default settings for view authentication, permissions, filtering
@@ -82,3 +84,6 @@ class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet
             return queryset.order_by('-numero_processo')[:int(last)]
         return queryset
 
+def index(request):
+    data = Processo.objects.all()
+    return render(request, 'core/index.html', {'data': data} )

@@ -12,7 +12,7 @@ Some costumers want to integrate their systems via API.
 
 
 ## TL;DR
-[https://coming-soon/](https://www.sidon.net.br/)
+[https://tikal-challenge.herokuapp.com/](https://tikal-challenge.herokuapp.com/)
 
 ## Work Environment:
 

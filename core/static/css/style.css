@@ -1,0 +1,200 @@
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Ubuntu,"Droid Sans","Helvetica Neue",sans-serif;
+    color: #121925;
+    background-color: lightyellow;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 24px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  h3 {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 600;
+    margin: 0;
+    transition: .2s ease-in-out;
+  }
+  
+  p {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+  
+  .container {
+    display: grid;
+  
+    grid-template-areas:
+      "nav header"
+      "nav content";
+  
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-gap: 8px 32px;
+  }
+  
+  .nav {
+    grid-area: nav;
+    background: #3C659E;
+
+    background-image: url("../img/green-lake.jpg");
+
+    width: 240px;
+    height: 100%;
+    position: fixed;
+    
+    &__logo {
+      padding: 32px 0px 0px 32px;
+    }
+    
+  }
+  
+  header {
+    grid-area: header;
+    background: white;
+    
+    h1 {
+      padding: 40px 0 24px;
+    }
+  }
+  
+  main {
+    grid-area: content;
+    height: 2500px;
+  }
+  
+  section {
+    display: grid;
+    
+    grid-template-areas:
+      "card"
+      "card"
+      "card";
+    grid-gap: 16px;
+    
+    padding-right: 32px;
+  }
+  
+  @media (min-width: 960px) {
+    section {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-areas: 
+        "card card card";
+    }
+  }
+  
+  .card {
+    background: white;
+    border: 1px solid #E6E8EB;
+    border-radius: 4px;
+    padding: 16px;
+    
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 1px 2px 0 rgba(103,121,136,0.16);
+      
+      h3 {
+        color: #0A6CFF;
+      }
+      
+      .small {
+        display: none;
+      }
+      
+      .hidden {
+        display: block;
+      }
+    }
+    
+    &:active {
+      box-shadow: none;
+    }
+    
+    &__header {
+      clear: both;
+      overflow: hidden;
+      
+      display: grid;
+  
+      grid-template-areas:
+        "title date"
+        "description description";
+  
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 1fr auto;
+      
+      grid-gap: 0 8px;
+      
+      .left {
+        grid-area: title;
+        text-align: left;
+      }
+      
+      .small {
+        grid-area: date;
+        text-align: right;
+        margin: 0;
+        font-size: 12px;
+        color: #677988;
+        display: block;
+      }
+      
+      .hidden {
+        grid-area: date;
+        text-align: right;
+        margin: 0;
+        font-size: 12px;
+        color: #677988;
+        display: none;
+        transition: .1s ease-in-out;
+        
+        &:hover {
+          color: #0A6CFF;
+          cursor: pointer;
+        }
+      }
+      
+      .description {
+        grid-area: description;
+      }
+    }
+  }
+
+
+
+ul {
+  margin-top: 30px;
+  list-style-type: none;
+  padding: 0;
+  line-height: 2em;
+
+}
+
+
+a{
+  text-decoration: none;
+  color: white ;
+  font-size:1.3em;
+  font-family: "VT323";
+  display: block;
+  padding: 0.9em;
+  transition: background-color 0.5s, color 0.5s, text-indent 0.3s;
+
+}
+
+a:hover {
+  background-color:#ffa3da;
+  color: #f0ed6e;
+  text-indent: 4px;
+}
+
+.lex {
+  color: #f0ed6e;
+}

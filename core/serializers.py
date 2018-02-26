@@ -11,14 +11,14 @@ class ProcessoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Processo
-        fields = ('numero_processo', 'dados_processo','links')
+        fields = ('user','numero_processo', 'dados_processo','links')
 
     def get_links(self, obj):
         request = self.context['request']
         links = {'self': reverse('processo-detail', kwargs={'pk': obj.pk}, request=request)}
 
         if bool(request.POST):
-            pass
+            user = request.user
         return links
 
 

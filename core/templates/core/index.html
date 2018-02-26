@@ -1,0 +1,7 @@
+{% extends 'core/base.html' %}
+{%  block conent %}
+
+    {% for d in data %}
+        <p>{{ d.numero_processo }}</p>
+    {% endfor %}
+{% endblock %}
