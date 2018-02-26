@@ -35,13 +35,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework_docs',
     'django_filters',
-    'controlcenter',
 ]
-
-
-CONTROLCENTER_DASHBOARDS = (
-    ('tikdash', 'dashboards.dashboard.TikDash'),
-)
 
 
 
