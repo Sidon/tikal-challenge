@@ -1,10 +1,16 @@
 from django.shortcuts import render
+from django.views.generic import ListView, CreateView, UpdateView
+from django.views import View
+from django_tables2 import RequestConfig
 from django.core.exceptions import ValidationError
 from rest_framework import authentication, permissions, viewsets, filters
 from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework_tracking.models import APIRequestLog
 from .models import Processo
 from .serializers import ProcessoSerializer, TrackSerializer
+from .tables import ProcessoTable
+from .forms import ProcessoForm
+
 
 
 class DefaultsMixin(object):
@@ -84,7 +90,22 @@ class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet
             return queryset.order_by('-numero_processo')[:int(last)]
         return queryset
 
-def index(request):
-    data = Processo.objects.all()
-    print (data)
-    return render(request, 'core/index.html', {'data': data} )
+
+class ProcessoListView(ListView):
+    model = Processo
+    template_name = 'core/processo_list.html'
+    context_object_name = 'processo'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProcessoListView, self).get_context_data(**kwargs)
+        table = ProcessoTable(Processo.objects.all().order_by('-pk'))
+        RequestConfig(self.request, paginate={'per_page': 10}).configure(table)
+        context['table'] = table
+        return context
+
+
+class ProcessoCreateView(CreateView):
+    model = Processo
+    template_name = 'core/processo-create.html'
+    form_class = ProcessoForm
+    success_url = '/processos'

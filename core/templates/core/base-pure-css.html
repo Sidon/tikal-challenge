@@ -11,7 +11,9 @@
 
   <!-- Add additional CSS in static file -->
   {% load static %}
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
@@ -19,7 +21,7 @@
     <div class="wrapper">
 
       <div class="box header">
-          {% block header %} {% endblock %}
+          <h1>Tikal Tech Challenge</h1>
       </div>
 
         <nav class="sidebar">
@@ -27,11 +29,12 @@
           <ul>
             <li class="active"><a class="lex" href="index.html ">Listagem</a></li>
             <li><a href="./cadastro.html">Cadastro</a></li>
-            <li><a href="./admin/">Admin</a></li>
-            <li><a href="./api/">API</a></li>
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            <!-- Infelizmente drf ainda não tem namespace para uma router viewset -->
+            <li><a href="https://tikal-challenge.herokuapp.com/api/">API</a></li>
           </ul>
         </nav>
-        
+
 
         <div class="box content">
             {% block content %}

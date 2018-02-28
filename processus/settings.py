@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework_docs',
     'django_filters',
+    'django_tables2',
 ]
 
 

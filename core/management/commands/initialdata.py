@@ -3,40 +3,21 @@ from  core.models import Processo
 
 
 procs = []
-
-procs.append('''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. 
-Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue 
-semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per 
-conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero.''')
-
-procs.append(''' Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at 
-dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, 
-iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus 
-metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. ''')
-
-
-procs.append('''Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. 
-Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. 
-Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam 
-ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus.''')
-
-procs.append('''Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, 
-at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia 
-Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. 
-Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. 
-Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est 
-pulvinar ullamcorper. Nulla facilisi.''')
-
-
-procs.append('''Integer lacinia sollicitudin massa. Cras metus. Sed aliquet risus a tortor. Integer id quam. Morbi mi. 
-Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla 
-quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan 
-porttitor, cursus quis, aliquet eget, justo.''')
+procs.append('Amet porttitor eget dolor morbi. Magna fringilla urna porttitor rhoncus. In vitae turpis massa sed elementum.')
+procs.append('Et malesuada fames ac turpis egestas. Cursus risus at ultrices mi tempus imperdiet.')
+procs.append('Tincidunt arcu non sodales neque sodales ut etiam sit amet. Viverra nibh cras pulvinar mattis.')
+procs.append('Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.')
+procs.append('Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis.')
+procs.append('Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam.')
+procs.append('Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis.')
+procs.append('Et netus et malesuada fames ac turpis egestas. In vitae turpis massa sed elementum tempus.')
+procs.append('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+procs.append('Morbi tristique senectus et netus et malesuada. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Cursus euismod quis.')
+procs.append('Magna sit amet purus gravida quis blandit turpis cursus in. At imperdiet dui accumsan sit amet nulla facilisi. Sit amet est placerat.')
 
 # Gerando 20 numeros consecutivos de 20 digitos
 data = []
-for n in range(5):
+for n in range(len(procs)):
     zeros = '0' * 20
     last = str(n+1)
     num_proc = zeros[:len(last)*-1]+last
