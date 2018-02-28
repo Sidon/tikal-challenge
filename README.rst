@@ -1,34 +1,48 @@
-# Tikal Tech Dev Challenge
-A small test used to evaluate if the candidate has the basic skills:
+.. _tikal-challenge-sidon_doc:
 
-+ Ability to interpret the problem;
-+ Proficiency in Python and Django;
-+ Experience with version control.
-
-
-## Description
-There is a system of process tracking which notifies costumers about changes in the process content. 
-Some costumers want to integrate their systems via API. 
+##############################
+``Tikal Tech Dev Challenge``
+#############################
 
 
-## TL;DR
-[https://coming-soon/](https://www.sidon.net.br/)
+.. topic:: Description
 
-## Work Environment:
+    There is a system of process tracking which notifies costumers about changes in the process content.
+    Some costumers want to integrate their systems via API.
 
-| Resource          | Description               | Version    |
-| :---------------- | :------------------       | :-------   |
-| Computer          | Desktop 8 GB Memory       | I5 G5      |
-| Operating System  | xenial ubuntu@maui        | 17.03      |
-| Editor/IDE        | Pycharm                   | 2017.1.1   |
-| venv              | Conda (Miniconda)         | 4.3.14
-| Programming language | Python                 |    3.61    |
-| CI                | CircleCI                  | 2017-08    |
-| Coverage          | Codecov                   |            |
-| Django            | Main framework            | 1.11.2     |
-| djangorestframework | Framework for api       | 3.6.3      |
+    A small test used to evaluate if the candidate has the basic skills:
 
-## Original Especifications
+    + Ability to interpret the problem;
+    + Proficiency in Python and Django;
+    + Experience with version control.
+
+    :Date: **27/02/2018**
+    :Author: **Sidon Duarte**
+
+
+TL;DR
+*****
+A aplicação foi hospedada no `Heroku <http://www.heroku.com>`_ . Para testá-la, `Clique aqui <https://tikal-challenge.herokuapp.com/>`_ .
+
+Work Environment:
+******************
+
+    | Resource          | Description               | Version    |
+    | :---------------- | :------------------       | :-------   |
+    | Computer          | Desktop 8 GB Memory       | I5 G5      |
+    | Operating System  | xenial ubuntu@maui        | 17.03      |
+    | Editor/IDE        | Pycharm                   | 2017.1.1   |
+    | venv              | Conda (Miniconda)         | 4.3.14
+    | Programming language | Python                 |    3.61    |
+    | CI                | CircleCI                  | 2017-08    |
+    | Coverage          | Codecov                   |            |
+    | Django            | Main framework            | 1.11.2     |
+    | djangorestframework | Framework for api       | 3.6.3      |
+
+
+Original Especifications
+***************************
+
 The original specifications can see on a PDF document on the doc directory
 
 ## Description for this implementation
@@ -85,7 +99,7 @@ Listar os dois últimos processos:
     {"count":2,"next":null,"previous":null,"results":[{"user":1,"numero_processo":"97700225000000000000","dados_processo":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque facilisis ullamcorper. Maecenas gravida vel ligula quis gravida.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/43/"}},{"user":1,"numero_processo":"12345600000000000000","dados_processo":"Et mel laudem percipitur intellegebat. Ne sumo doctus pro, nam postea tritani noluisse no. Vix at sumo habeo convenire, nibh dolor nominavi ei mea.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/44/"}}]}
 
 
-Excluir um processl:
+Excluir um processo:
 ====================
 ::
 
@@ -112,25 +126,23 @@ Acesso a API via browser:
 
 Instalação e execução local
 ***************************
-
 Para execução local, descompactar o arquivo /config/tikal.conf.zip que contem um arquivo do tipo json
 (tikal.json) que precisa ser criptografado, como o comando: ./manage.py crypt
 
 
 Dados Iniciais
 ****************
-
 Para gerar os dados iniciais execute:
 
     $ ./manage.py initialdata
 
-Limpara as migrações
+Limpar as migrações
 **********************
-
 Para limpar as migraçoes execute:
 
     $ ./manage.py clmigrations
 
 
-## API Documentation. 
+API Documentation.
+******************
 The api docummenttion can see [here (coming soon)](https://www.sidon.net.br)
