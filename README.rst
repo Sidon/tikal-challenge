@@ -3,24 +3,23 @@
 ######################################
 
 
+Description
+*************
+There is a system of process tracking which notifies costumers about changes in the process content.
+Some costumers want to integrate their systems via API.
+
+A small test used to evaluate if the candidate has the basic skills:
+
++ Ability to interpret the problem;
++ Proficiency in Python and Django;
++ Experience with version control.
+
+:Date: **27/02/2018**
+:Author: **Sidon Duarte**
+
 TL;DR
 *******
 A aplicação foi hospedada no `Heroku <http://www.heroku.com>`_ . Para testá-la, `Clique aqui <https://tikal-challenge.herokuapp.com/>`_ .
-
-.. topic:: Description
-
-    There is a system of process tracking which notifies costumers about changes in the process content.
-    Some costumers want to integrate their systems via API.
-
-    A small test used to evaluate if the candidate has the basic skills:
-
-    + Ability to interpret the problem;
-    + Proficiency in Python and Django;
-    + Experience with version control.
-
-    :Date: **27/02/2018**
-    :Author: **Sidon Duarte**
-
 
 Work Environment:
 ******************
