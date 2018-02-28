@@ -35,110 +35,101 @@ The original specifications can see on a PDF document on the doc directory
 This project implements the original purpose in a way where the API is browseable.
 In the root we can see two links, one for process and other for api logs.
 
-Curl Commands:
+Comandos Curl
 ***********************************
 
 API Root:
 ============
 ::
 
-    $ curl https://tikal-challenge.herokuapp.com/api
-    {"persons":"https://tikal-challenge.herokuapp.com//persons/",
-    "logging":"https://tikal-challenge.herokuapp.com//logging/"}
+    $ curl https://tikal-challenge.herokuapp.com/api/
+    {"api/processos":"https://tikal-challenge.herokuapp.com/api/api/processos/",
+    "api/logging":"https://tikal-challenge.herokuapp.com/api/api/logging/"}
 
 
-Inserir usuários do facebook ao banco de dados:
-===============================================
-::
-
-    $ curl --user user:senha --data "facebookId=4" https://tikal-challenge.herokuapp.com//persons/
-    {"facebookId":4,"name":"Mark Zuckerberg","gender":"Not in facebook","email":"Not in facebook",
-     "links":{"self":"https://tikal-challenge.herokuapp.com//persons/4/"}}
-
-    $ curl --user user:senha --data "facebookId=1299" https://tikal-challenge.herokuapp.com//persons/
-    {"facebookId":1299,"name":"Alexandra Hays","gender":"Not in facebook","email":"Not in facebook",
-     "links":{"self":"https://tikal-challenge.herokuapp.com//persons/1299/"}}
-
-    $ curl --user user:senha --data "facebookId=1399" https://tikal-challenge.herokuapp.com//persons/
-    {"facebookId":1399,"name":"Sarah Ellison","gender":"Not in facebook","email":"Not in facebook",
-     "links": {"self":"https://tikal-challenge.herokuapp.com//persons/1399/"}}
-
-Listar todos os usuarios:
+Listar os processos
 =========================
 ::
 
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//persons/
-    [{"facebookId":4,"name":"Mark Zuckerberg","gender":"Not in facebook","email":"Not in facebook",
-      "links": {"self":"https://tikal-challenge.herokuapp.com//persons/4/"}},
-     {"facebookId":1299,"name":"Alexandra Hays","gender":"Not in facebook","email":"Not in facebook",
-      "links":{"self":"https://tikal-challenge.herokuapp.com//persons/1299/"}},
-     {"facebookId":1399,"name":"Sarah Ellison","gender":"Not in facebook","email":"Not in facebook",
-      "links": {"self":"https://tikal-challenge.herokuapp.com//persons/1399/"}}]
+    curl -H 'Accept: application/json; indent=4' -u admin:master.21 https://tikal-challenge.herokuapp.com/api/api/processos/
+    {
+        "count": 13,
+        "next": "https://tikal-challenge.herokuapp.com/api/api/processos/?page=2",
+        "previous": null,
+        "results": [
+            {
+                "user": 1,
+                "numero_processo": "00000000000000000001",
+                "dados_processo": "Amet porttitor eget dolor morbi. Magna fringilla urna porttitor rhoncus. In vitae turpis massa sed elementum.",
+                "links": {
+                    "self": "https://tikal-challenge.herokuapp.com/api/api/processos/32/"
+                }
+            },
 
-Listar somente os dois primeiros usuários:
+
+
+Listar somente os dois primeiros processos:
 ==========================================
 ::
 
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//persons/?limit=2
-    [{"facebookId":4,"name":"Mark Zuckerberg","gender":"Not in facebook","email":"Not in facebook",
-      "links":{"self":"https://tikal-challenge.herokuapp.com//persons/4/"}},
-     {"facebookId":1299,"name":"Alexandra Hays","gender":"Not in facebook","email":"Not in facebook",
-      "links":{"self":"https://tikal-challenge.herokuapp.com//persons/1299/"}}]
+    curl --user user:senha https://tikal-challenge.herokuapp.com/api/api/processos/?limit=2
+    {"count":2,"next":null,"previous":null,"results":
+    [{"user":1,"numero_processo":"00000000000000000001","dados_processo":"Amet porttitor eget dolor morbi. Magna fringilla urna porttitor rhoncus. In vitae turpis massa sed elementum.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/32/"}},{"user":1,"numero_processo":"00000000000000000002","dados_processo":"Et malesuada fames ac turpis egestas. Cursus risus at ultrices mi tempus imperdiet.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/33/"}}]}
 
 
-Listar os dois últimos usuários:
+Listar os dois últimos processos:
 ==========================================
 ::
 
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//persons/?last=2
-    [{"facebookId":1399,"name":"Sarah Ellison","gender":"Not in facebook","email":"Not in facebook","links":
-     {"self":"https://tikal-challenge.herokuapp.com//persons/1399/"}},
-     {"facebookId":1299,"name":"Alexandra Hays","gender":"Not in facebook","email":"Not in facebook",
-      "links":{"self":"https://tikal-challenge.herokuapp.com//persons/1299/"}}]
+    curl --user user:senha https://tikal-challenge.herokuapp.com/api/api/processos/?last=2
+    {"count":2,"next":null,"previous":null,"results":[{"user":1,"numero_processo":"97700225000000000000","dados_processo":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque facilisis ullamcorper. Maecenas gravida vel ligula quis gravida.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/43/"}},{"user":1,"numero_processo":"12345600000000000000","dados_processo":"Et mel laudem percipitur intellegebat. Ne sumo doctus pro, nam postea tritani noluisse no. Vix at sumo habeo convenire, nibh dolor nominavi ei mea.","links":{"self":"https://tikal-challenge.herokuapp.com/api/api/processos/44/"}}]}
 
-Excluir um usuário:
+
+Excluir um processl:
 ====================
 ::
 
-    curl --user user:senha -X DELETE https://tikal-challenge.herokuapp.com//persons/1399/
+    curl --user user:senha -X DELETE https://tikal-challenge.herokuapp.com/api/processos/9999/
 
-Exibir as informações de um usuário:
-====================================
-::
-
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//persons/1399/
-    {"detail":"Não encontrado."}
-
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//persons/4/
-    {"facebookId":4,"name":"Mark Zuckerberg","gender":"Not in facebook","email":"Not in facebook",
-     "links":{"self":"https://tikal-challenge.herokuapp.com//persons/4/"}}
 
 Exibir os logs de acessos:
 ==========================
 ::
 
-    $ curl --user user:senha https://tikal-challenge.herokuapp.com//logging/
-    {"user":null,"requested_at":"2017-05-16T18:02:49.236681Z","path":"/persons/","remote_addr":"127.0.0.1","host":"127.0.0.1:8007","method":"GET","query_params":"{}","data":null,"response":"\n\n\n\n<!DOCTYPE html>\n<html>\n  <head>\n    \n\n      \n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n        <meta name=\"robots\" content=\"NONE,NOARCHIVE\" />\n      \n\n      <title>Person List – Django REST framework</title>\n\n      \n        \n          <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/rest_framework/css/bootstrap.min.css\"/>\n          <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/rest_framework/css/bootstrap-tweaks.css\"/>\n        \n\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/rest_framework/css/prettify.css\"/>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/rest_framework/css/default.css\"/>\n      \n\n    \n  </head>\n\n  \n  <body class=\"\">\n\n    <div class=\"wrapper\">\n      \n        <div class=\"navbar navbar-static-top navbar-inverse\">\n          <div class=\"container\">\n            <span>\n              \n                <a class='navbar-brand' rel=\"nofollow\" href='http://www.django-rest-framewor
-    ...
+   $ curl --user user:senha https://tikal-challenge.herokuapp.com/api/api/logging/
+
+...
 
 Acesso a API via browser:
 *************************
 
-.. topic:: Hospedado no Heroku, token válido por 2 meses.
+.. topic:: Hospedado no Heroku.
 
-    :Raiz: https://tikal-challenge.herokuapp.com//
-    :Usuários: https://tikal-challenge.herokuapp.com//persons/
-    :Tracking: https://tikal-challenge.herokuapp.com//logging/
+    :Raiz: https://tikal-challenge.herokuapp.com/api/
+    :Processos: https://tikal-challenge.herokuapp.com/api/api/processos/
+    :Tracking: https://tikal-challenge.herokuapp.com/api/api/logging/
 
 
 Instalação e execução local
 ***************************
 
-Para execução local, descompactar o arquivo llabs/config/llabs.conf.zip que contem um arquivo do tipo json (llabs.json) com o token para acesso a API do facebook e parte da configuração do arquivo llabs/settings.py.
+Para execução local, descompactar o arquivo /config/tikal.conf.zip que contem um arquivo do tipo json
+(tikal.json) que precisa ser criptografado, como o comando: ./manage.py crypt
 
 
+Dados Iniciais
+****************
 
+Para gerar os dados iniciais execute:
 
+    $ ./manage.py initialdata
+
+Limpara as migrações
+**********************
+
+Para limpar as migraçoes execute:
+
+    $ ./manage.py clmigrations
 
 
 ## API Documentation. 
