@@ -1,8 +1,6 @@
-.. _tikal-challenge-sidon_doc:
-
-##############################
+######################################
 ``Tikal Tech Dev Challenge``
-#############################
+######################################
 
 
 .. topic:: Description
@@ -27,17 +25,27 @@ A aplicação foi hospedada no `Heroku <http://www.heroku.com>`_ . Para testá-l
 Work Environment:
 ******************
 
+    +-------------------+---------------------------+------------+
     | Resource          | Description               | Version    |
-    | :---------------- | :------------------       | :-------   |
+    +===================+===========================+============+
     | Computer          | Desktop 8 GB Memory       | I5 G5      |
+    +-------------------+---------------------------+------------+
     | Operating System  | xenial ubuntu@maui        | 17.03      |
+    +-------------------+---------------------------+------------+
     | Editor/IDE        | Pycharm                   | 2017.1.1   |
-    | venv              | Conda (Miniconda)         | 4.3.14
-    | Programming language | Python                 |    3.61    |
+    +-------------------+---------------------------+------------+
+    | venv              | Conda (Miniconda)         | 4.3.14     |
+    +-------------------+---------------------------+------------+
+    | Devel Platform    + Django/Python             |    3.61    |
+    +-------------------+---------------------------+------------+
     | CI                | CircleCI                  | 2017-08    |
+    +-------------------+---------------------------+------------+
     | Coverage          | Codecov                   |            |
+    +-------------------+---------------------------+------------+
     | Django            | Main framework            | 1.11.2     |
-    | djangorestframework | Framework for api       | 3.6.3      |
+    +-------------------+---------------------------+------------+
+    | DRF               | dajano-rest-fw            |  3.6       |
+    +-------------------+---------------------------+------------+
 
 
 Original Especifications
@@ -83,7 +91,7 @@ Listar os processos
 
 
 Listar somente os dois primeiros processos:
-==========================================
+===============================================
 ::
 
     curl --user user:senha https://tikal-challenge.herokuapp.com/api/api/processos/?limit=2
@@ -143,6 +151,3 @@ Para limpar as migraçoes execute:
     $ ./manage.py clmigrations
 
 
-API Documentation.
-******************
-The api docummenttion can see [here (coming soon)](https://www.sidon.net.br)
