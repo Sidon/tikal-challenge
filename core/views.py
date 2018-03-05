@@ -1,3 +1,5 @@
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.views import View
@@ -6,10 +8,11 @@ from django.core.exceptions import ValidationError
 from rest_framework import authentication, permissions, viewsets, filters
 from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework_tracking.models import APIRequestLog
-from .models import Processo
-from .serializers import ProcessoSerializer, TrackSerializer
-from .tables import ProcessoTable
+from .models import Processo, Logdb
+from .serializers import ProcessoSerializer, TrackSerializer, LogdbSerializer
+from .tables import ProcessoTable, LogdbTable
 from .forms import ProcessoForm
+from util.logapi import Log_api
 
 
 
@@ -42,6 +45,7 @@ class ProcessoViewSet(DefaultsMixin, LoggingMixin, viewsets.ModelViewSet):
     serializer_class = ProcessoSerializer
     search_fields = ('numero_processo' )
     queryset = Processo.objects.all()
+    log_api = Log_api()
 
 
     def get_queryset(self):
@@ -67,10 +71,31 @@ class ProcessoViewSet(DefaultsMixin, LoggingMixin, viewsets.ModelViewSet):
 
         return queryset
 
+    # def create(self, request):
+    #     data = {'user_id': request.user, 'numero_processo': request.POST.get('numero_processo'),
+    #             'dados_atual': request.POST.get('dados_processo'), 'dados_anterior': ''}
+
+
+    def _perform(self, anterior):
+        self.request.query_params._mutable = True
+        self.request.query_params['user'] = self.request.user
+
+        return  {'user_id': self.request.user, 'numero_processo': self.request.POST.get('numero_processo'),
+                'dados_atual': self.request.POST.get('dados_processo'),
+                'dados_anterior': anterior}
+
+
     def perform_create(self, serializer):
-        if bool(self.request.POST):
-            if bool(self.request.POST):
-                serializer.save ()
+        data = self._perform('')
+        self.log_api.update_api(data)
+        serializer.save()
+
+
+    def perform_update(self, serializer):
+        anterior = Processo.objects.filter(numero_processo=self.request.POST.get('numero_processo'))[0].dados_processo
+        data = self._perform(anterior)
+        self.log_api.update_api(data)
+        serializer.save()
 
 
 class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet):
@@ -91,6 +116,22 @@ class TrackingViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet
         return queryset
 
 
+class LogPostsViewSet(DefaultsMixin, LoggingMixin, viewsets.ReadOnlyModelViewSet):
+    serializer_class = LogdbSerializer
+    queryset =Logdb.objects.all()
+
+    def get_queryset(self):
+        queryset = Logdb.objects.all()
+        limit = self.request.query_params.get('limit', None)
+        last = self.request.query_params.get('last', None)
+
+        if limit is not None:
+            queryset = queryset[:int(limit)]
+        elif last is not None:
+            return queryset[:int(last)]
+        return queryset
+
+
 class ProcessoListView(ListView):
     model = Processo
     template_name = 'core/processo_list.html'
@@ -104,7 +145,27 @@ class ProcessoListView(ListView):
         return context
 
 
+
+class LogdbListView(ListView):
+    model = Logdb
+    template_name = 'core/log_posts_list.html'
+    context_object_name = 'logdb'
+
+    def get_context_data(self, **kwargs):
+        context = super(LogdbListView, self).get_context_data(**kwargs)
+        table = LogdbTable(Logdb.objects.all().order_by('-pk'))
+        RequestConfig(self.request, paginate={'per_page': 10}).configure(table)
+        context['table'] = table
+        return context
+
+
 class ProcessoCreateView(CreateView):
+    model = Processo
+    template_name = 'core/processo-create.html'
+    form_class = ProcessoForm
+    success_url = '/processos'
+
+class ProcessoUpdateView(UpdateView):
     model = Processo
     template_name = 'core/processo-create.html'
     form_class = ProcessoForm

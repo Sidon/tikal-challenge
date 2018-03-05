@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
-from .models import Processo
+from .models import Processo, Logdb
 from rest_framework_tracking.models import APIRequestLog
 
 
 class ProcessoSerializer(serializers.ModelSerializer):
 
     links = serializers.SerializerMethodField()
-    data_face = {}
 
     class Meta:
         model = Processo
@@ -18,7 +17,24 @@ class ProcessoSerializer(serializers.ModelSerializer):
         links = {'self': reverse('processo-detail', kwargs={'pk': obj.pk}, request=request)}
 
         if bool(request.POST):
-            user = request.user
+            pass
+        return links
+
+
+class LogdbSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Logdb
+        fields = ('post_req','post_curl','links')
+
+    def get_links(self, obj):
+        request = self.context['request']
+        links = {'self': reverse('logdb-detail', kwargs={'pk': obj.pk}, request=request)}
+
+        if bool(request.POST):
+            pass
         return links
 
 

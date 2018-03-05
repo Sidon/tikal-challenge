@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 from  core.models import Processo
+from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 procs = []
@@ -29,7 +31,10 @@ class Command(BaseCommand):
     help = 'Create initial data'
 
     def handle(self, *args, **options):
-        Processo.objects.all().delete()
-        for processo in data:
-            Processo.objects.create(user_id='1', numero_processo=processo['num'], dados_processo=processo['dados'])
-            
+        if User.objects.filter(Q(username='admin') & Q(is_superuser=1)):
+            Processo.objects.all().delete()
+            for processo in data:
+                Processo.objects.create(user_id='1', numero_processo=processo['num'], dados_processo=processo['dados'])
+        else:
+            print ('Inclua um usuário superuser com o nome admin')
+            return

@@ -6,12 +6,12 @@ pip install fabric3
 '''
 
 import os
-from termcolor import colored
+#from termcolor import colored
 import yaml
 from fabric.api import run, put, env, cd, prefix, sudo, execute
 from fabric.contrib.project import rsync_project
 from paramiko import SSHConfig
-from os.path import expanduser
+#from os.path import expanduser
 from fabric.utils import abort
 import pprint
 from fabric.api import local
@@ -22,7 +22,7 @@ pp = pprint.PrettyPrinter(indent=2)
 env.use_ssh_config = True
 
 
-# local - run a shell command on the local machine
+# local - run a shell command on the local machine  ex.: local('git add -u')
 # run - run a sehll command on the remote server
 # put - copy to remote server via ssh (scp)
 # env - environment conf.
@@ -40,6 +40,9 @@ __status__ = "Production"
 # read config yaml file
 with open('fab.yaml', 'r') as f:
     cfg  = yaml.load(f)
+
+print (cfg)
+
 
 # Load .ssh configuration from current local user
 ssh_config = SSHConfig()

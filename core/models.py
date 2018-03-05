@@ -25,11 +25,11 @@ class Processo(models.Model):
 
 
 class Logdb(models.Model):
-    processo = models.ForeignKey(Processo,related_name='processo', verbose_name='Processo')
-    data = models.DateField
+    post_req = models.TextField(verbose_name='Post to API, via request (python)')
+    post_curl = models.TextField(verbose_name='Post to API, via curl (CLI)')
 
     class Meta:
-        verbose_name = 'Log'
-        verbose_name_plural = 'Logs'
+        verbose_name = 'Log Post'
+        verbose_name_plural = 'Logs Posts'
 
 
