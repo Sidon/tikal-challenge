@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from .track_data import *
 
-@track_data('dados_processo')
 class Processo(models.Model):
     user = models.ForeignKey(User, related_name='user', verbose_name='Usuário')
     numero_processo = models.CharField(max_length=20, blank=False, unique=True, verbose_name='Número')
@@ -16,12 +15,9 @@ class Processo(models.Model):
         verbose_name = 'Processo'
         verbose_name_plural = 'Processos'
 
-
-    @classmethod
-    def process_save(cls, sender, instance, createed, **kwargs):
-        if instance.has_changed('dados-processo'):
-            # Fazer o  post
-            print ('dado alterado')
+    def save(self, *args, **kwargs):
+        print ('gerar o post')
+        super(Processo, self).save(*args, **kwargs)
 
 
 class Logdb(models.Model):

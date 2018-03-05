@@ -119,7 +119,14 @@ Exibir os logs de acessos:
 
    $ curl --user user:senha https://tikal-challenge.herokuapp.com/api/api/logging/
 
-...
+
+Exibir log dos posts nas apis dos clientes:
+=============================================
+::
+
+    $ curl --user admin:master.21 https://tikal-challenge.herokuapp.com/api/api/log-posts/
+
+
 
 Acesso a API via browser:
 *************************
