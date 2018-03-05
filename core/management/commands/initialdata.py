@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
-from  core.models import Processo
+from  core.models import Processo, Logdb
 from django.contrib.auth.models import User
 from django.db.models import Q
+from util.logapi import Log_api
 
 
 procs = []
@@ -17,24 +18,27 @@ procs.append('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 procs.append('Morbi tristique senectus et netus et malesuada. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Cursus euismod quis.')
 procs.append('Magna sit amet purus gravida quis blandit turpis cursus in. At imperdiet dui accumsan sit amet nulla facilisi. Sit amet est placerat.')
 
-# Gerando 20 numeros consecutivos de 20 digitos
+
 data = []
 for n in range(len(procs)):
-    zeros = '0' * 20
-    last = str(n+1)
-    num_proc = zeros[:len(last)*-1]+last
-    # dado_proc = 'Esse é o texto padrão de testes para o processo cujo número termina com ' + last
+    num_proc = str(n+1)
     data.append({'num': num_proc, 'dados': procs[n]})
-
 
 class Command(BaseCommand):
     help = 'Create initial data'
+    log_api = Log_api()
 
     def handle(self, *args, **options):
         if User.objects.filter(Q(username='admin') & Q(is_superuser=1)):
             Processo.objects.all().delete()
+            Logdb.objects.all().delete()
             for processo in data:
                 Processo.objects.create(user_id='1', numero_processo=processo['num'], dados_processo=processo['dados'])
+
+                data_post = {"user_id": "1", "numero_processo": processo['num'],
+                        "dados_atual": processo['dados'], "dados_anterior": ""}
+                self.log_api.update_api(data_post)
+
         else:
             print ('Inclua um usuário superuser com o nome admin')
             return

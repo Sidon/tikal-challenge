@@ -10,7 +10,7 @@ class ProcessoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Processo
-        fields = ('user','numero_processo', 'dados_processo','links')
+        fields = ('user_id','numero_processo', 'dados_processo','links')
 
     def get_links(self, obj):
         request = self.context['request']

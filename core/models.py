@@ -1,7 +1,6 @@
-from django.db.models.signals import post_init
 from django.contrib.auth.models import User
 from django.db import models
-from .track_data import *
+
 
 class Processo(models.Model):
     user = models.ForeignKey(User, related_name='user', verbose_name='Usuário')
@@ -15,10 +14,6 @@ class Processo(models.Model):
         verbose_name = 'Processo'
         verbose_name_plural = 'Processos'
 
-    def save(self, *args, **kwargs):
-        print ('gerar o post')
-        super(Processo, self).save(*args, **kwargs)
-
 
 class Logdb(models.Model):
     post_req = models.TextField(verbose_name='Post to API, via request (python)')
@@ -27,5 +22,3 @@ class Logdb(models.Model):
     class Meta:
         verbose_name = 'Log Post'
         verbose_name_plural = 'Logs Posts'
-
-

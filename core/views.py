@@ -1,8 +1,6 @@
-from django.http import HttpResponsePermanentRedirect
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.shortcuts import render
+from collections import namedtuple
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
-from django.views import View
 from django_tables2 import RequestConfig
 from django.core.exceptions import ValidationError
 from rest_framework import authentication, permissions, viewsets, filters
@@ -14,7 +12,7 @@ from .tables import ProcessoTable, LogdbTable
 from .forms import ProcessoForm
 from util.logapi import Log_api
 
-
+log_api = Log_api()
 
 class DefaultsMixin(object):
     """Default settings for view authentication, permissions, filtering
@@ -45,8 +43,6 @@ class ProcessoViewSet(DefaultsMixin, LoggingMixin, viewsets.ModelViewSet):
     serializer_class = ProcessoSerializer
     search_fields = ('numero_processo' )
     queryset = Processo.objects.all()
-    log_api = Log_api()
-
 
     def get_queryset(self):
         queryset = Processo.objects.all()
@@ -71,30 +67,26 @@ class ProcessoViewSet(DefaultsMixin, LoggingMixin, viewsets.ModelViewSet):
 
         return queryset
 
-    # def create(self, request):
-    #     data = {'user_id': request.user, 'numero_processo': request.POST.get('numero_processo'),
-    #             'dados_atual': request.POST.get('dados_processo'), 'dados_anterior': ''}
-
 
     def _perform(self, anterior):
         self.request.query_params._mutable = True
         self.request.query_params['user'] = self.request.user
 
-        return  {'user_id': self.request.user, 'numero_processo': self.request.POST.get('numero_processo'),
-                'dados_atual': self.request.POST.get('dados_processo'),
-                'dados_anterior': anterior}
+        return  {"user_id": str(self.request.user), "numero_processo": self.request.POST.get("numero_processo"),
+                "dados_atual": self.request.POST.get("dados_processo"),
+                "dados_anterior": anterior}
 
 
     def perform_create(self, serializer):
         data = self._perform('')
-        self.log_api.update_api(data)
+        log_api.update_api(data)
         serializer.save()
 
 
     def perform_update(self, serializer):
         anterior = Processo.objects.filter(numero_processo=self.request.POST.get('numero_processo'))[0].dados_processo
         data = self._perform(anterior)
-        self.log_api.update_api(data)
+        log_api.update_api(data)
         serializer.save()
 
 
@@ -140,7 +132,7 @@ class ProcessoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProcessoListView, self).get_context_data(**kwargs)
         table = ProcessoTable(Processo.objects.all().order_by('-pk'))
-        RequestConfig(self.request, paginate={'per_page': 10}).configure(table)
+        RequestConfig(self.request, paginate={'per_page': 30}).configure(table)
         context['table'] = table
         return context
 
@@ -154,9 +146,16 @@ class LogdbListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(LogdbListView, self).get_context_data(**kwargs)
         table = LogdbTable(Logdb.objects.all().order_by('-pk'))
-        RequestConfig(self.request, paginate={'per_page': 10}).configure(table)
+        RequestConfig(self.request, paginate={'per_page': 30}).configure(table)
         context['table'] = table
         return context
+
+
+def _log_post(obj, before, rq):
+
+    data = {"user_id": str(rq.user), "numero_processo": obj.numero_processo,
+            "dados_atual": obj.dados_processo, "dados_anterior": before}
+    log_api.update_api(data)
 
 
 class ProcessoCreateView(CreateView):
@@ -165,8 +164,30 @@ class ProcessoCreateView(CreateView):
     form_class = ProcessoForm
     success_url = '/processos'
 
+    def form_valid(self, form):
+        structs = namedtuple('structs', 'dados_processo numero_processo id')
+        d1 = form.cleaned_data
+        obj = structs(dados_processo=d1['dados_processo'], numero_processo=d1['numero_processo'], id=str(d1['user']))
+
+        _log_post(obj, "", self.request)
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class ProcessoUpdateView(UpdateView):
     model = Processo
     template_name = 'core/processo-create.html'
     form_class = ProcessoForm
     success_url = '/processos'
+
+    def form_valid(self, form,):
+        before = Processo.objects.filter(pk=self.object.id)[0]
+        if not (before.dados_processo == self.object.dados_processo):
+
+            print ('Objjjjject-->',self.object)
+            _log_post(self.object, before.dados_processo, self.request)
+
+
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+

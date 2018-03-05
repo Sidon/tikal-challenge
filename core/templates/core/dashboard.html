@@ -37,13 +37,15 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'core:processos' %}">
+                    <li class="nav-item {% if request.resolver_match.view_name == "core:home" %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'core:home' %}">
                             <i class="nc-icon nc-notes"></i>
-                            <p>Listagem</p>
+                            <p>Processos</p>
                         </a>
                     </li>
-                    <li>
+
+
+                    <li class="nav-item {% if request.resolver_match.view_name == "core:cadastro" %}active{% endif %}">
                         <a class="nav-link" href="{% url 'core:cadastro' %}">
                             <i class="nc-icon nc-layers-3"></i>
                             <p>Cadastro</p>
@@ -51,7 +53,7 @@
                     </li>
 
 
-                    <li>
+                    <li class="nav-item {% if request.resolver_match.view_name == "core:logposts" %}active{% endif %}">
                         <a class="nav-link" href="{% url 'core:logposts' %}">
                             <i class="nc-icon nc-puzzle-10"></i>
                             <p>Posts Log</p>

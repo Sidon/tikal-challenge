@@ -41,8 +41,6 @@ __status__ = "Production"
 with open('fab.yaml', 'r') as f:
     cfg  = yaml.load(f)
 
-print (cfg)
-
 
 # Load .ssh configuration from current local user
 ssh_config = SSHConfig()
