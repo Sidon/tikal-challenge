@@ -24,7 +24,7 @@ pycrypto==2.6.1
 Pygments==2.2.0
 python-dateutil==2.6.1
 pytz==2017.2
-PyYAML==3.12
+PyYAML==5.4
 requests==2.18.2
 six==1.10.0
 static3==0.7.0
