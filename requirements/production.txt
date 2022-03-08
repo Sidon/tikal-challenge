@@ -15,7 +15,7 @@ django-viewflow==1.2.0
 djangorestframework==3.6.3
 drf-tracking==1.2.0
 drfdocs==0.0.11
-httpie==0.9.9
+httpie==3.1.0
 idna==2.5
 Markdown==2.6.8
 prettyconf==1.2.3
